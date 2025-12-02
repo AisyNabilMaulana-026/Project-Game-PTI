@@ -1,10 +1,24 @@
-extends Node
-class_name State
+# meta-name: StateMachine State
+# meta-description: Blueprint template for StateMachine State
+# meta-default: true
+extends State
 
-var player
 
-func enter(): pass
-func exit(): pass
-func handle_input(event): pass
-func update(delta): pass
-func physics_update(delta): pass
+func enter(_msg : Dictionary = {}) -> void:
+	pass
+
+
+func exit() -> void:
+	pass
+
+
+func input(_event: InputEvent) -> void:
+	pass
+
+
+func process(_delta: float) -> void:
+	pass
+
+
+func physics_process(_delta: float) -> void:
+	pass
