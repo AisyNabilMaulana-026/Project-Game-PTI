@@ -1,29 +1,18 @@
 extends State
 
-func enter():
-	var animasi = player.get_animasi()
-	player.velocity = Vector2.ZERO
-	var arah = player.arah_terakhir
-	if arah == null:
-		player.arah_terkahir = Vector2.DOWN
-	
-	if arah == Vector2.RIGHT:
-		animasi.play("diam")
-		animasi.scale.x = 1
-	elif arah == Vector2.LEFT:
-		animasi.play("diam")
-		animasi.scale.x = -1
-	elif arah == Vector2.UP:
-		animasi.play("diam")
-	else:
-		animasi.play("diam")
 
-func physics_update(_delta):
-	# kalau ada input, pindah ke JalanState
-	if Input.is_action_pressed("ui_right") \
-	or Input.is_action_pressed("ui_left") \
-	or Input.is_action_pressed("ui_up") \
-	or Input.is_action_pressed("ui_down"):
-		player.change_state("jalan")
-	if Input.is_action_pressed("tombol_serang"):
-		player.change_state("serang")
+@export var friction : float = 500.0
+
+
+func enter(_msg : Dictionary = {}) -> void:
+	actor.velocity = Vector2.ZERO
+	actor.anim_state.travel("Idle")
+
+
+func physics_process(delta: float) -> void:
+	var direction : = actor.get_direction()
+	if direction != Vector2.ZERO:
+		state_machine.change_state("Walk")
+		return
+	
+	actor.velocity = actor.velocity.move_toward(Vector2.ZERO, friction * delta)
